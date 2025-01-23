@@ -1,6 +1,13 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+
+function scrollToBottom() {
+  window.scrollTo({
+    behavior: 'smooth',
+    top: document.body.scrollHeight
+  })
+}
 </script>
 
 <template>
@@ -13,7 +20,9 @@ import TheWelcome from './components/TheWelcome.vue'
   </header>
 
   <main>
+    <button @click="scrollToBottom">SCROLL TO BOTTOM</button>
     <TheWelcome />
+    <div class="scroll-trigger"></div>
   </main>
 </template>
 
@@ -25,6 +34,11 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+
+.scroll-trigger {
+  height: 1000px;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
