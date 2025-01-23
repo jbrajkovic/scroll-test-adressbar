@@ -23,6 +23,90 @@ function scrollToBottom() {
     <button @click="scrollToBottom">SCROLL TO BOTTOM</button>
     <TheWelcome />
     <div class="scroll-trigger"></div>
+    <div class="fixed-div">
+      <div class="fixed-div-title">IFRAME</div>
+      <div class="fixe-div-content">
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+        <div>TEST</div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -57,5 +141,15 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+
+.fixed-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: aliceblue;
+  width: 100%;
+  height: 100dvh;
+  color: #000;
 }
 </style>
