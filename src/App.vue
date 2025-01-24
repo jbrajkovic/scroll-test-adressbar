@@ -4,33 +4,29 @@ import { onMounted, onBeforeUnmount, ref } from "vue";
 export default {
   setup() {
     const fixedDiv = ref(null);
+    let ticking = false; // Flag za kontrolu requestAnimationFrame
 
-    let ticking = false; // Flag za debouncing preko requestAnimationFrame
-
-    const syncWindowScroll = (event) => {
+    const syncFixedScroll = () => {
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(() => {
-          window.scrollTo({
-            top: event.target.scrollTop, // Sinkroniziraj window scroll
-          });
-          ticking = false;
+          if (fixedDiv.value) {
+            fixedDiv.value.scrollTo({
+              top: window.scrollY, // Sinhronizacija pozicije sa window.scrollY
+              behavior: "instant", // Bez animacije za trenutnu sinhronizaciju
+            });
+          }
+          ticking = false; // Reset flag-a nakon ažuriranja
         });
       }
     };
 
     onMounted(() => {
-      if (fixedDiv.value) {
-        fixedDiv.value.addEventListener("scroll", syncWindowScroll, {
-          passive: true, // Poboljšava performanse
-        });
-      }
+      window.addEventListener("scroll", syncFixedScroll, { passive: true });
     });
 
     onBeforeUnmount(() => {
-      if (fixedDiv.value) {
-        fixedDiv.value.removeEventListener("scroll", syncWindowScroll);
-      }
+      window.removeEventListener("scroll", syncFixedScroll);
     });
 
     return {
@@ -47,11 +43,11 @@ export default {
     TEST
   </header>
 
-  <main ref="mainElement">
+  <main>
     <div class="fixed-div" ref="fixedDiv">
-      <div class="fixed-div-title">IFRAME</div>
+      <div class="fixed-div-title">Fixed Content</div>
       <div class="fixed-div-content">
-        <div v-for="i in 100" :key="i">TEST {{ i }}</div>
+        <div v-for="i in 100" :key="i">Fixed Content {{ i }}</div>
       </div>
     </div>
     <div class="main-content">
@@ -68,22 +64,23 @@ header {
 }
 
 main {
-  height: calc(100dvh + 200px);
-  overflow-y: auto; /* Osiguraj da main ima skrol */
+  height: 200vh; /* Dovoljno sadržaja da omogući window scroll */
 }
 
 .fixed-div {
   position: fixed;
   top: 100px;
   left: 0;
-  background-color: aliceblue;
   width: 100%;
-  height: 100dvh;
-  color: #000;
-  overflow-y: auto; /* Skrol za fixed div */
+  height: calc(100vh - 100px);
+  background-color: aliceblue;
+  overflow-y: auto; /* Skrolabilni sadržaj */
+  pointer-events: none; /* Ignoriše interakcije mišem */
 }
 
+
+
 .main-content {
-  padding-top: 100px;
+  margin-top: 150px; /* Dovoljno prostora za vidljivi sadržaj */
 }
 </style>
