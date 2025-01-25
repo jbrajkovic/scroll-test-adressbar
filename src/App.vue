@@ -135,6 +135,7 @@ main {
   background-color: aliceblue;
   overflow-y: auto; /* Skrolabilni sadržaj */
   pointer-events: none; /* Ignoriše interakcije mišem */
+  color: red;
 }
 
 
