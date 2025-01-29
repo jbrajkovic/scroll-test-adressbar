@@ -3,7 +3,7 @@
     <header>
       <h1>LOGO</h1>
     </header>
-    <iframe ref="iframe" src="http://localhost:5174/?currency=eur&standalone=true&language=en&externalId=josipb&feToken=c&tenantId=0c17fe55-315e-4ee0-b4f6-1364c8557dd1" id="child"></iframe>
+    <iframe ref="iframe" src="https://staging.sports-aio-web.7platform.net/home?tenantId=0c17fe55-315e-4ee0-b4f6-1364c8557dd1&currency=eur&language=en&externalId=josipb&feToken=c&debug=true&standalone=true" id="child"></iframe>
   </div>
 </template>
 
