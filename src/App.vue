@@ -15,6 +15,7 @@ export default {
     const parent = ref(null);
     const iframe = ref(null);
     let lastScrollY = 0;
+    let lastInnerHeight = window.innerHeight;
     let isAddressBarHidden = false;
     const wih = ref(0);
     const wvh = ref(0);
@@ -31,8 +32,9 @@ export default {
 
       if (!isAddressBarHidden) {
         // Ako je address bar još uvek vidljiv
-        if (viewportHeight < windowHeight) {
+        if (windowHeight < lastInnerHeight) {
           isAddressBarHidden = true;
+          lastInnerHeight = windowHeight;
           enableIframeScroll();
         }
       } else {
