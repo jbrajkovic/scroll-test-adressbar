@@ -1,7 +1,7 @@
 <template>
   <div class="parent" ref="parent">
     <header>
-      <h1>LOGO</h1>
+      <h1>LOGO - {{ wih }} - {{ wvh }}</h1>
     </header>
     <iframe ref="iframe" src="https://staging.sports-aio-web.7platform.net/home?tenantId=0c17fe55-315e-4ee0-b4f6-1364c8557dd1&currency=eur&language=en&externalId=josipb&feToken=c&debug=true&standalone=true" id="child"></iframe>
   </div>
@@ -16,11 +16,16 @@ export default {
     const iframe = ref(null);
     let lastScrollY = 0;
     let isAddressBarHidden = false;
+    const wih = ref(0);
+    const wvh = ref(0);
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const viewportHeight = window.visualViewport.height;
       const windowHeight = window.innerHeight;
+      wvh.value = viewportHeight;
+      wih.value = windowHeight;
+      console.log('test', wvh.value, wih.value);
 
       const scrollingDown = currentScrollY > lastScrollY;
 
@@ -60,7 +65,7 @@ export default {
       window.removeEventListener("scroll", handleScroll);
     });
 
-    return { parent, iframe };
+    return { parent, iframe, wvh, wih };
   },
 };
 </script>
