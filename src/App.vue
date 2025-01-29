@@ -1,87 +1,92 @@
+<template>
+  <div class="parent" ref="parent">
+    <header>
+      <h1>LOGO</h1>
+    </header>
+    <iframe ref="iframe" src="http://localhost:5174/?currency=eur&standalone=true&language=en&externalId=josipb&feToken=c&tenantId=0c17fe55-315e-4ee0-b4f6-1364c8557dd1" id="child"></iframe>
+  </div>
+</template>
+
 <script>
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 export default {
   setup() {
-    const fixedDiv = ref(null);
-    let ticking = false; 
+    const parent = ref(null);
+    const iframe = ref(null);
+    let lastScrollY = 0;
+    let isAddressBarHidden = false;
 
-    const syncFixedScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          if (fixedDiv.value) {
-            fixedDiv.value.scrollTo({
-              top: window.scrollY, 
-              behavior: "instant", 
-            });
-          }
-          ticking = false; 
-        });
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const viewportHeight = window.visualViewport.height;
+      const windowHeight = window.innerHeight;
+
+      const scrollingDown = currentScrollY > lastScrollY;
+
+      if (!isAddressBarHidden) {
+        // Ako je address bar još uvek vidljiv
+        if (viewportHeight < windowHeight) {
+          isAddressBarHidden = true;
+          enableIframeScroll();
+        }
+      } else {
+        // Ako je address bar sakriven i korisnik skroluje gore, ponovo preuzmi kontrolu
+        if (!scrollingDown) {
+          isAddressBarHidden = false;
+          disableIframeScroll();
+        }
       }
+
+      lastScrollY = currentScrollY;
+    };
+
+    const enableIframeScroll = () => {
+      if (!iframe.value) return;
+      iframe.value.style.pointerEvents = "auto"; // Omogućava interakciju sa `iframe`
+    };
+
+    const disableIframeScroll = () => {
+      if (!iframe.value) return;
+      iframe.value.style.pointerEvents = "none"; // Onemogućava interakciju sa `iframe`
+      window.scrollTo({ top: 1, behavior: "instant" }); // Sprečava skokove
     };
 
     onMounted(() => {
-      window.addEventListener("scroll", syncFixedScroll, { passive: true });
+      window.addEventListener("scroll", handleScroll, { passive: true });
     });
 
     onBeforeUnmount(() => {
-      window.removeEventListener("scroll", syncFixedScroll);
+      window.removeEventListener("scroll", handleScroll);
     });
 
-    return {
-      fixedDiv,
-    };
+    return { parent, iframe };
   },
 };
 </script>
 
-
-
-<template>
-  <header>
-    TEST
-  </header>
-
-  <main>
-    <div class="fixed-div" ref="fixedDiv">
-      <div class="fixed-div-title">Fixed Content</div>
-      <div class="fixed-div-content">
-        <div v-for="i in 100" :key="i">Fixed Content {{ i }}</div>
-      </div>
-    </div>
-    <div class="main-content">
-      <div v-for="i in 100" :key="'main' + i">Main Content {{ i }}</div>
-    </div>
-  </main>
-</template>
-
 <style scoped>
-header {
+.parent {
   width: 100%;
-  height: 100px;
-  background-color: orange;
+  height: calc(100dvh + 3000px);
 }
 
-main {
-  height: 200vh; 
-}
-
-.fixed-div {
+header {
   position: fixed;
-  top: 100px;
+  top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 100px);
-  background-color: aliceblue;
-  overflow-y: auto; 
-  pointer-events: none; 
-  color: red;
+  background: blue;
+  z-index: 10;
+  height: 48px;
 }
 
-
-
-.main-content {
-  margin-top: 150px; 
+iframe {
+  width: 100%;
+  position: fixed;
+  top: 48px;
+  height: calc(100dvh - 100px);
+  border: none;
+  pointer-events: none; /* Početno isključujemo interakciju */
 }
 </style>
