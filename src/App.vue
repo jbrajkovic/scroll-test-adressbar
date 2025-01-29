@@ -90,7 +90,7 @@ iframe {
   width: 100%;
   position: fixed;
   top: 48px;
-  height: calc(100dvh - 100px);
+  height: calc(100dvh - 48px);
   border: none;
   pointer-events: none; /* Početno isključujemo interakciju */
 }
