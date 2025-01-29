@@ -26,13 +26,13 @@ export default {
       const windowHeight = window.innerHeight;
       wvh.value = viewportHeight;
       wih.value = windowHeight;
-      console.log('test', wvh.value, wih.value);
+      console.log('test', lastInnerHeight, windowHeight);
 
       const scrollingDown = currentScrollY > lastScrollY;
 
       if (!isAddressBarHidden) {
         // Ako je address bar još uvek vidljiv
-        if (windowHeight < lastInnerHeight) {
+        if (windowHeight > lastInnerHeight) {
           isAddressBarHidden = true;
           lastInnerHeight = windowHeight;
           enableIframeScroll();
@@ -49,11 +49,13 @@ export default {
     };
 
     const enableIframeScroll = () => {
+      console.log('TEST enable');
       if (!iframe.value) return;
       iframe.value.style.pointerEvents = "auto"; // Omogućava interakciju sa `iframe`
     };
 
     const disableIframeScroll = () => {
+      console.log('TEST disable');
       if (!iframe.value) return;
       iframe.value.style.pointerEvents = "none"; // Onemogućava interakciju sa `iframe`
       window.scrollTo({ top: 1, behavior: "instant" }); // Sprečava skokove
